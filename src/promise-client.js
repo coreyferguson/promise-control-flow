@@ -1,11 +1,14 @@
 'use strict';
 
 const Promise = require('bluebird');
+const nodeJsClient = require('./node-js-client');
 
-class AsyncClient {
+class PromiseClient {
 
   /**
-   * Convert the given name into uppercase letters after 50ms.
+   * Convert the given name into uppercase letters.
+   * If the name is undefined, null, or empty, reject the promise with an appropriate Error.
+   * Both operations above should take 50ms.
    *
    * http://bluebirdjs.com/docs/api/new-promise.html
    *
@@ -16,18 +19,8 @@ class AsyncClient {
   }
 
   /**
-   * Reject with the error message 'oops, something bad happened' after 50ms.
-   *
-   * http://bluebirdjs.com/docs/api/new-promise.html
-   *
-   * @returns {Promise.<Error>} Error with message: 'oops, something bad happened'
-   */
-  rejectPromise() {
-  }
-
-  /**
    * Using `resolveUpperCase` created above, convert the two give names into uppercase letters.
-   * Run all operations in sequence, one after the other.
+   * Run both operations in parallel.
    *
    * "For coordinating multiple concurrent discrete promises. While .all is good for handling a
    * dynamically sized list of uniform promises, Promise.join is much easier (and more performant)
@@ -43,8 +36,8 @@ class AsyncClient {
   }
 
   /**
-   * Using the `resolveUpperCase` created above, convert the given `name` of into uppercase letters.
-   * Repeat this operation for the given `number` of times.
+   * Using the `resolveUpperCase` created above, convert a `number` of values to lowercase.
+   * Values are the string value of the index `i` below.
    * Run all operations in parallel.
    *
    * "iterate over all the values in the Iterable into an array and return a promise that is
@@ -54,10 +47,14 @@ class AsyncClient {
    * http://bluebirdjs.com/docs/api/promise.all.html
    *
    * @param {number} number Number of times to convert `name` to uppercase
-   * @param {string} name Lowercase name
    * @returns {Promise.<string[]>} Uppercase names
    */
-  all(number, name) {
+  all(number) {
+    let promises = [];
+    for (let i=0; i<number; i++) {
+      promises.push(this.resolveUpperCase(''+i));
+    }
+    // Resolve all promises here
   }
 
   /**
@@ -86,6 +83,19 @@ class AsyncClient {
   mapSeries(names) {
   }
 
+  /**
+   * `nodeJsClient.resolveUpperCase` is a function that does the same thing as the `resolverUpperCase` defined
+   * in this class. However, it follows the NodeJs callback pattern.
+   * Use the `Promise.promisify` function to convert a NodeJs callback pattern into a Promise.
+   *
+   * http://bluebirdjs.com/docs/api/promise.promisify.html
+   *
+   * @param {string} name Lowercase name
+   * @returns {Promise.<string>} Uppercase name
+   */
+  promisify(name) {
+  }
+
 }
 
-module.exports = new AsyncClient();
+module.exports = new PromiseClient();

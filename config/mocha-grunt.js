@@ -12,7 +12,7 @@ module.exports = {
   },
   answers: {
     src: [
-      'src/answers/set-mode-answers.js',
+      'src/answers/util/set-mode-answers.js',
       'test/**/*.js'
     ]
   }
