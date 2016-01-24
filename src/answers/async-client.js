@@ -1,6 +1,7 @@
 'use strict';
 
 const Promise = require('bluebird');
+const resolveUpperCase = require('./01-resolve-upper-case');
 
 class AsyncClient {
 
@@ -13,6 +14,7 @@ class AsyncClient {
    * @returns {Promise.<string>} Uppercase name
    */
   resolveUpperCase(name) {
+    return resolveUpperCase(name);
   }
 
   /**
@@ -23,6 +25,11 @@ class AsyncClient {
    * @returns {Promise.<Error>} Error with message: 'oops, something bad happened'
    */
   rejectPromise() {
+    return new Promise(function(resolve, reject) {
+      setTimeout(function() {
+        reject(new Error('oops, something bad happened'));
+      }, 50);
+    });
   }
 
   /**
@@ -40,6 +47,7 @@ class AsyncClient {
    * @returns {Promise.<string[]>} Uppercase names
    */
   join(name1, name2) {
+    return Promise.join(this.resolveUpperCase(name1), this.resolveUpperCase(name2));
   }
 
   /**
@@ -58,6 +66,11 @@ class AsyncClient {
    * @returns {Promise.<string[]>} Uppercase names
    */
   all(number, name) {
+    var promises = [];
+    for (var i=0; i<number; i++) {
+      promises.push(this.resolveUpperCase(name));
+    }
+    return Promise.all(promises);
   }
 
   /**
@@ -72,6 +85,9 @@ class AsyncClient {
    * @returns {Promise.<string[]>} Uppercase names
    */
   map(names) {
+    return Promise.map(names, function(name) {
+      return this.resolveUpperCase(name);
+    }.bind(this));
   }
 
   /**
@@ -84,6 +100,9 @@ class AsyncClient {
    * @returns {Promise.<string[]>} Uppercase names
    */
   mapSeries(names) {
+    return Promise.mapSeries(names, function(name) {
+      return this.resolveUpperCase(name);
+    }.bind(this));
   }
 
 }

@@ -1,13 +1,18 @@
 
 module.exports = {
-  test: {
-    options: {
-      reporter: 'spec',
-      clearRequireCache: true,
-      timeout: 5000
-    },
+  options: {
+    reporter: 'spec',
+    clearRequireCache: true,
+    timeout: 5000
+  },
+  problems: {
     src: [
-      'config/mocha-init.js',
+      'test/**/*.js'
+    ]
+  },
+  answers: {
+    src: [
+      'src/answers/set-mode-answers.js',
       'test/**/*.js'
     ]
   }

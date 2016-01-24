@@ -10,6 +10,6 @@ module.exports = function(grunt) {
   });
 
   // Default task.
-  grunt.registerTask('default', ['jscs', 'mochaTest']);
+  grunt.registerTask('default', ['jscs', 'mochaTest:problems']);
 
 };
