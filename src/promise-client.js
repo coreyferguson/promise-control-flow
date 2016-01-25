@@ -46,8 +46,8 @@ class PromiseClient {
    *
    * http://bluebirdjs.com/docs/api/promise.all.html
    *
-   * @param {number} number Number of times to convert `name` to uppercase
-   * @returns {Promise.<string[]>} Uppercase names
+   * @param {number} number Number of promises to resolve
+   * @returns {Promise.<string[]>} Index of created promise
    */
   all(number) {
     let promises = [];
@@ -93,7 +93,18 @@ class PromiseClient {
    * @param {string} name Lowercase name
    * @returns {Promise.<string>} Uppercase name
    */
-  promisify(name) {
+  promisify(names) {
+  }
+
+  /**
+   * TODO
+   */
+  coroutine(parallelValues, seriesValues) {
+    return Promise.coroutine(function* (parallelValues, seriesValues) {
+      var mapValues = yield promiseClient.map(parallelValues);
+      var mapSeriesValues = yield promiseClient.mapSeries(seriesValues);
+      return mapValues.concat(mapSeriesValues);
+    })(parallelValues, seriesValues);
   }
 
 }
