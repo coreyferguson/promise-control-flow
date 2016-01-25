@@ -1,7 +1,8 @@
 {
-  "engines": {
-    "node": ">= 0.10.0"
-  },
+  "name": "promise-control-flow",
+  "version": "0.1.0",
+  "description": "Learn Promise Control Flow with Bluebird",
+  "main": "src/promise-client.js",
   "devDependencies": {
     "chai": "^3.4.1",
     "chai-as-promised": "^5.2.0",
@@ -14,5 +15,29 @@
     "mocha": "^2.3.4",
     "sinon": "^1.17.2",
     "sinon-chai": "^2.8.0"
-  }
+  },
+  "scripts": {
+    "test": "grunt"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/coreyferguson/promise-control-flow.git"
+  },
+  "keywords": [
+    "bluebird",
+    "promise",
+    "control",
+    "flow",
+    "collections",
+    "series",
+    "parallel",
+    "sequence",
+    "tutorial"
+  ],
+  "author": "Corey Ferguson <corey.t.ferguson@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/coreyferguson/promise-control-flow/issues"
+  },
+  "homepage": "https://github.com/coreyferguson/promise-control-flow#readme"
 }
