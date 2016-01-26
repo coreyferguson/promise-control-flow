@@ -6,9 +6,8 @@ const nodeJsClient = require('./node-js-client');
 class PromiseClient {
 
   /**
-   * Convert the given name into uppercase letters.
+   * Convert the given name into uppercase letters and resolve after 50ms.
    * If the name is undefined, null, or empty, reject the promise with an appropriate Error.
-   * Both operations above should take 50ms.
    *
    * http://bluebirdjs.com/docs/api/new-promise.html
    *
