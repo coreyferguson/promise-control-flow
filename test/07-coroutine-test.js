@@ -11,9 +11,13 @@ const promiseClient = require('../src/answers/util/promise-client-context').prom
 // } else {
   describe('07-coroutine', function() {
 
-    it.only('should resolve the promise', function() {
-      promiseClient.coroutine(['one', 'two'], ['three', 'four']);
-        // .to.eventually.equal(['ONE', 'TWO', 'THREE', 'FOUR']);
+    it.only('should resolve the promise', function(done) {
+      console.log( promiseClient.coroutine(['one', 'two'], ['three', 'four']) ).then(function() {
+        console.log('here');
+        done();
+      });
+      // return mg.expect(promiseClient.coroutine(['one', 'two'], ['three', 'four']))
+      //   .to.eventually.eql(['ONE', 'TWO', 'THREE', 'FOUR']);
     });
 
   });

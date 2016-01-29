@@ -68,6 +68,9 @@ class PromiseClient {
    * @returns {Promise.<string[]>} Uppercase names
    */
   map(names) {
+    return Promise.map(names, function(name) {
+      return this.resolveUpperCase(name);
+    }.bind(this));
   }
 
   /**
@@ -80,6 +83,9 @@ class PromiseClient {
    * @returns {Promise.<string[]>} Uppercase names
    */
   mapSeries(names) {
+    return Promise.mapSeries(names, function(name) {
+      return this.resolveUpperCase(name);
+    }.bind(this));
   }
 
   /**
@@ -98,12 +104,19 @@ class PromiseClient {
   /**
    * TODO
    */
-  coroutine(parallelValues, seriesValues) {
-    return Promise.coroutine(function* (parallelValues, seriesValues) {
-      var mapValues = yield promiseClient.map(parallelValues);
-      var mapSeriesValues = yield promiseClient.mapSeries(seriesValues);
+  coroutine(parallelInputs, seriesValues) {
+    return Promise.coroutine(function* () {
+      console.log('this:', this);
+      console.log('parallelInputs:', parallelInputs);
+      console.log('seriesValues:', seriesValues);
+      var blah = this.map(parallelInputs);
+      console.log('blah:', blah);
+      var mapValues = yield this.map(parallelInputs);
+      var mapSeriesValues = yield this.mapSeries(seriesValues);
+      console.log('mapValues:', mapValues);
+      console.log('mapSeriesValues:', mapSeriesValues);
       return mapValues.concat(mapSeriesValues);
-    })(parallelValues, seriesValues);
+    }.bind(this))();
   }
 
 }
